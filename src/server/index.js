@@ -55,17 +55,24 @@ const express = require("express");
 const cors = require("cors");
 const connectDB = require("../utils/db");
 const Student = require("../models/index");
+const bodyParser = require("body-parser");
 
 const app = express();
+
+connectDB();
+
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "*", "http://18.204.45.120:3000"],
+    methods: ["GET", "POST", "DELETE", "UPDATE", "PUT", "PATCH"],
+    credentials: true,
+  })
+);
+
+app.use(bodyParser.json());
 app.use(express.json());
-app.use(cors());
 
-const startServer = async () => {
-  try {
-    await connectDB();
-    console.log("Connected To MongoDB");
 
-    // create a new student
     app.post("/api/students", async (req, res) => {
       try {
         const student = new Student(req.body);
@@ -89,10 +96,4 @@ const startServer = async () => {
     app.listen(3004, () => {
       console.log("Server running on port 3004");
     });
-  } catch (error) {
-    console.log("Error In Connecting To MongoDB : ", error);
-  }
-};
-
-startServer();
 
