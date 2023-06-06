@@ -29,7 +29,7 @@ const Home = () => {
         },
         body: JSON.stringify({ name, age, gender, address })
       };
-      const response = await fetch("/api/students", options);
+      const response = await fetch("http://localhost:3004/api/students", options);
       const data = await response.json();
       if (data.success) {
         alert("student added successfully");

@@ -9,7 +9,7 @@ function Students() {
 
   const fetchStudents = async () => {
     try {
-      const response = await fetch("/api/students");
+      const response = await fetch("http://localhost:3004/api/students");
       const data = await response.json();
       if (data.success) {
         setStudents(data.students);

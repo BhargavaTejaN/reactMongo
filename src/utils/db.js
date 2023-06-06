@@ -35,25 +35,16 @@
 
 
 
-const { MongoClient } = require("mongodb");
-
-const uri = "mongodb://localhost:27017";
-
-const client = new MongoClient(uri, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
-
-let db;
+const mongoose = require("mongoose");
 
 const connectDB = async () => {
   try {
-    await client.connect();
-    db = client.db("StudentDB");
-    return db;
+    const con = await mongoose.connect(
+      "mongodb+srv://Bhargav:Bhargav@cluster0.53jvhcl.mongodb.net/studentDB?retryWrites=true&w=majority");
+    console.log(`MongoDB connected : ${con.connection.host}`);
   } catch (error) {
-    console.error("Error connecting to MongoDB:", error);
-    throw error;
+    console.log("MongoDB connection error: ", error);
+    process.exit(1);
   }
 };
 
